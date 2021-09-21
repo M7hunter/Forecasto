@@ -3,4 +3,5 @@
     <string name="error_occurred">error occurred</string>
     <string name="no_internet_connection">no internet connection</string>
     <string name="not_successful">not successful</string>
+    <string name="search_by_city_country">search by city, country</string>
 </resources>
