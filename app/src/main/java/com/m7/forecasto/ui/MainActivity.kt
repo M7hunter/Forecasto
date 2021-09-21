@@ -1,7 +1,8 @@
-package com.m7.forecasto
+package com.m7.forecasto.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.m7.forecasto.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
