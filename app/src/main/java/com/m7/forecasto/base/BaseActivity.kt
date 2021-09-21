@@ -26,14 +26,14 @@ abstract class BaseActivity<B : ViewDataBinding>(@LayoutRes private val layoutRe
 
     private val loadingDialog = LoadingDialog()
 
-    abstract fun bindView(viewBinding: B)
+    abstract fun onCreation(viewBinding: B)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DataBindingUtil.setContentView<B>(this, layoutRes)
             .apply {
                 viewBinding = this
-                bindView(this)
+                onCreation(this)
 
                 btnBack?.setOnClickListener {
                     onBackPressed()
