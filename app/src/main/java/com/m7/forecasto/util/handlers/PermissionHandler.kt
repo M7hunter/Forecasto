@@ -12,9 +12,12 @@ import javax.inject.Singleton
 @Singleton
 class PermissionHandler @Inject constructor(@ApplicationContext val context: Context) {
 
-    fun isGranted(permission: String) =
-        ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+    fun isGranted(vararg permissions: String) =
+        permissions.all {
+            ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
 
     fun reqPermissions(activity: Activity, permissions: Array<String>, requestCode: Int) =
         requestPermissions(activity, permissions, requestCode)
 }
+
