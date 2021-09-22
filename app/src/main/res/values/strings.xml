@@ -4,4 +4,7 @@
     <string name="no_internet_connection">no internet connection</string>
     <string name="not_successful">not successful</string>
     <string name="search_by_city_country">search by city, country</string>
+    <string name="couldnt_get_city">couldn\'t get city, try later</string>
+    <string name="default_city_name">London, UK</string>
+    <string name="current_city">current city</string>
 </resources>

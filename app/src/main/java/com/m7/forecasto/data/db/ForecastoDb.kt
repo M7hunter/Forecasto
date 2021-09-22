@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.m7.forecasto.data.model.Forecast
+import com.m7.forecasto.data.model.City
 
-@Database(entities = [Forecast::class], version = 1)
+@Database(entities = [City::class], version = 1)
 abstract class ForecastoDb : RoomDatabase() {
 
     companion object {

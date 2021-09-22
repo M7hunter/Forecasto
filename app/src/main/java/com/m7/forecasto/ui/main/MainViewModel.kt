@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.m7.forecasto.base.BaseViewModel
 import com.m7.forecasto.data.model.City
-import com.m7.forecasto.data.model.Forecast
 import com.m7.forecasto.data.repo.CityRepo
-import com.m7.forecasto.data.repo.ForecastRepo
 import com.m7.forecasto.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -26,7 +24,8 @@ class MainViewModel @Inject constructor(
             throwable.printStackTrace()
             _getSavedCitiesData.postValue(Resource.error(msg = throwable.message.toString()))
         })) {
-            repo.getSavedCities()
+            _getSavedCitiesData.postValue(Resource.loading())
+            _getSavedCitiesData.postValue(Resource.success(repo.getSavedCities()))
         }
     }
 }

@@ -20,14 +20,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/purple_200"
+                android:foreground="?attr/selectableItemBackground"
                 android:padding="@dimen/dp_15"
                 android:text="@string/search_by_city_country"
                 android:textColorHint="@color/purple_500" />
         </FrameLayout>
 
-        <!-- forecast cities -->
+        <!-- cities -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_forecast_cities"
+            android:id="@+id/rv_cities"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"

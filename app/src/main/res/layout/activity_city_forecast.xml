@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
     <data>
 
         <variable
             name="cityName"
             type="String" />
+
+        <variable
+            name="isFav"
+            type="Boolean" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,23 +25,43 @@
             android:id="@+id/tv_city_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_15"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_15"
             android:text="@{cityName}"
-            android:textColor="@color/purple_200"
+            android:textColor="@color/header_color"
             android:textSize="@dimen/sp_20"
             android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/cities" />
+
+        <!-- favorite icon -->
+        <ImageView
+            android:id="@+id/iv_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:foreground="?attr/actionBarItemBackground"
+            android:padding="@dimen/dp_10"
+            android:src="@{isFav ? @drawable/ic_favorite : @drawable/ic_favorite_border}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_city_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_city_name"
+            tools:src="@drawable/ic_favorite_border" />
 
         <!-- city dailies -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_dailies"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_15"
             android:clipToPadding="false"
             android:paddingBottom="@dimen/dp_15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_city_name"
             tools:itemCount="5"
             tools:listitem="@layout/item_forecast" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
