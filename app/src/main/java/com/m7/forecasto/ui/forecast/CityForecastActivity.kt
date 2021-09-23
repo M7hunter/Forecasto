@@ -22,25 +22,37 @@ class CityForecastActivity :
                 isFav = city.isFavorite
 
                 ivFav.setOnClickListener {
-                    if (isFav) {
-                        isFav = false
-                        city.isFavorite = false
-                        // remove city from db
+                    ivFav.isEnabled = false
+                    if (city.isFavorite) {
+                        cityForecastViewModel.removeCity(city)
                     } else {
-                        isFav = true
-                        city.isFavorite = true
-                        // add city to db
+                        cityForecastViewModel.saveCity(city)
                     }
+                }
+
+                cityForecastViewModel.removeCityData.observe(this@CityForecastActivity) {
+                    isFav = false
+                    ivFav.isEnabled = true
+                    city.isFavorite = false
+                }
+
+                cityForecastViewModel.saveCityData.observe(this@CityForecastActivity) {
+                    isFav = true
+                    ivFav.isEnabled = true
+                    city.isFavorite = true
                 }
             }
 
-            cityForecastViewModel.getForecast(city.lat, city.lng)
+            cityForecastViewModel.getForecast(city.lat, city.lng, city.id)
             cityForecastViewModel.getForecastData.observe(this) {
                 handleCall(it) {
-                    it.data?.let { forecast ->
+                    it.data?.let { weatherList ->
                         viewBinding.rvDailies.apply {
                             layoutManager = LinearLayoutManager(this@CityForecastActivity)
-                            adapter = DailyAdapter(forecast.daily)
+                            adapter = DailyAdapter(
+                                weatherList.takeIf { it.size >= 5 }?.subList(0, 5)
+                                    ?: weatherList
+                            )
                         }
                     }
                 }

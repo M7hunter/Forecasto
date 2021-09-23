@@ -17,6 +17,7 @@ import com.m7.forecasto.util.Constants
 import com.m7.forecasto.util.Logger
 import com.m7.forecasto.util.handlers.PermissionHandler
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
@@ -34,29 +35,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreation(viewBinding: ActivityMainBinding) {
         // get previously saved cities
         mainViewModel.getSavedCities()
-        mainViewModel.getSavedCitiesData.observe(this) {
-            handleCall(it) {
-                it.data.let { cities ->
-                    viewBinding.apply {
-                        rvCities.layoutManager = LinearLayoutManager(this@MainActivity)
-                        if (!cities.isNullOrEmpty()) {
-                            rvCities.adapter =
-                                CityAdapter(cities.takeIf { it.size >= 5 }?.subList(0, 4) ?: cities
-                                ) {
+        mainViewModel.getSavedCitiesData?.observe(this) {
+            it.let { cities ->
+                viewBinding.apply {
+                    rvCities.layoutManager = LinearLayoutManager(this@MainActivity)
+                    if (!cities.isNullOrEmpty()) {
+                        rvCities.adapter =
+                            CityAdapter(
+                                cities.takeIf { it.size >= 5 }?.subList(0, 5) ?: cities
+                            ) {
+                                startNext(CityForecastActivity::class.java, Bundle().apply {
+                                    putParcelable(Constants.selectedCity, it)
+                                })
+                            }
+                    } else {
+                        // if no cities were saved get the current one
+                        getUserCity()
+                        userCity.observe(this@MainActivity) {
+                            it?.let {
+                                rvCities.adapter = CityAdapter(listOf(it)) {
                                     startNext(CityForecastActivity::class.java, Bundle().apply {
                                         putParcelable(Constants.selectedCity, it)
                                     })
-                                }
-                        } else {
-                            // if no cities were saved fetch the current one
-                            getUserCity()
-                            userCity.observe(this@MainActivity) {
-                                it?.let {
-                                    rvCities.adapter = CityAdapter(listOf(it)) {
-                                        startNext(CityForecastActivity::class.java, Bundle().apply {
-                                            putParcelable(Constants.selectedCity, it)
-                                        })
-                                    }
                                 }
                             }
                         }
@@ -127,11 +127,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun getDefaultCityByName() =
-        geocoder.getFromLocationName(getString(R.string.default_city_name), 1)
-            .firstNotNullOf {
-                userCity.postValue(
-                    City(1, it.latitude, it.longitude, getString(R.string.default_city_name))
-                )
-            }
-
+        try {
+            geocoder.getFromLocationName(getString(R.string.default_city_name), 1)
+                .firstNotNullOf {
+                    userCity.postValue(
+                        City(1, it.latitude, it.longitude, getString(R.string.default_city_name))
+                    )
+                }
+        } catch (e: IOException) {
+            displayError(getString(R.string.no_internet_connection))
+        }
 }
+
