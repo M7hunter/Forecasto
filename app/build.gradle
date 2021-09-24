@@ -19,9 +19,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "FORECAST_BASE_URL", "\"https://api.openweathermap.org/data/2.5/\""
-        buildConfigField "String", "FORECAST_API_KEY", "\"8a85dc5c08dd53c481096e010dfad6ed\""
+        buildConfigField "String", "FORECAST_API_KEY", "\"forecast_api_key\""
         buildConfigField "String", "PLACES_BASE_URL", "\"https://maps.googleapis.com/maps/api/place/\""
-        buildConfigField "String", "GOOGLE_API_KEY", "\"AIzaSyDg-rzsxmXlqqcDH6AvvfuYaW_aQoyGsI4\""
+        buildConfigField "String", "GOOGLE_API_KEY", "\"google_api_key\""
     }
 
     buildTypes {
