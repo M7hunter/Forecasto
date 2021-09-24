@@ -1,18 +1,18 @@
 package com.m7.forecasto.data.repo
 
-import com.m7.forecasto.data.api.APIsImpl
+import com.m7.forecasto.data.api.ForecastAPIsImpl
 import com.m7.forecasto.data.db.WeatherDao
 import com.m7.forecasto.data.model.Forecast
 import com.m7.forecasto.data.model.Weather
 import javax.inject.Inject
 
 class ForecastRepo @Inject constructor(
-    private val apIsImpl: APIsImpl,
+    private val forecastApIsImpl: ForecastAPIsImpl,
     private val weatherDao: WeatherDao
 ) {
 
     suspend fun getForecastByLatLng(lat: Double, lng: Double) =
-        apIsImpl.getForecastByLatLng(lat, lng)
+        forecastApIsImpl.getForecastByLatLng(lat, lng)
 
     // pass all required data to weather object to save it in the db
     fun editResponse(forecast: Forecast?, cityId: Int): List<Weather> {

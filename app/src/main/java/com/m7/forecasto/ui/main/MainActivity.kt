@@ -13,6 +13,7 @@ import com.m7.forecasto.base.BaseActivity
 import com.m7.forecasto.data.model.City
 import com.m7.forecasto.databinding.ActivityMainBinding
 import com.m7.forecasto.ui.forecast.CityForecastActivity
+import com.m7.forecasto.ui.search.SearchActivity
 import com.m7.forecasto.util.Constants
 import com.m7.forecasto.util.Logger
 import com.m7.forecasto.util.handlers.PermissionHandler
@@ -33,6 +34,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val geocoder = Geocoder(this, Locale.getDefault())
 
     override fun onCreation(viewBinding: ActivityMainBinding) {
+        viewBinding.flSearch.setOnClickListener {
+            startNext(SearchActivity::class.java)
+        }
+
         // get previously saved cities
         mainViewModel.getSavedCities()
         mainViewModel.getSavedCitiesData?.observe(this) {

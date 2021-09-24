@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.search.SearchActivity">
+
+        <!-- search box -->
+        <FrameLayout
+            android:id="@+id/fl_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            android:padding="@dimen/dp_10">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/purple_200"
+                android:hint="@string/search_by_city_country"
+                android:padding="@dimen/dp_15" />
+        </FrameLayout>
+
+        <!-- result cities -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_result_cities"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/dp_15"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_forecast_city" />
+
+    </LinearLayout>
+</layout>

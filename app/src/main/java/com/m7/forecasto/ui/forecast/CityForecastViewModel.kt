@@ -10,7 +10,6 @@ import com.m7.forecasto.data.model.Weather
 import com.m7.forecasto.data.repo.CityRepo
 import com.m7.forecasto.data.repo.ForecastRepo
 import com.m7.forecasto.util.Resource
-import com.m7.forecasto.util.handlers.ConnectivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -21,9 +20,6 @@ class CityForecastViewModel @Inject constructor(
     private val forecastRepo: ForecastRepo,
     private val cityRepo: CityRepo
 ) : BaseViewModel() {
-
-    @Inject
-    lateinit var connectivityHandler: ConnectivityHandler
 
     private val _getForecastData = MutableLiveData<Resource<List<Weather>>>()
     val getForecastData: LiveData<Resource<List<Weather>>> = _getForecastData

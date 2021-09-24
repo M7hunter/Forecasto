@@ -22,24 +22,22 @@ class CityForecastActivity :
                 isFav = city.isFavorite
 
                 ivFav.setOnClickListener {
-                    ivFav.isEnabled = false
                     if (city.isFavorite) {
                         cityForecastViewModel.removeCity(city)
                     } else {
+                        // update data before saving it
+                        city.isFavorite = true
                         cityForecastViewModel.saveCity(city)
                     }
                 }
 
                 cityForecastViewModel.removeCityData.observe(this@CityForecastActivity) {
                     isFav = false
-                    ivFav.isEnabled = true
                     city.isFavorite = false
                 }
 
                 cityForecastViewModel.saveCityData.observe(this@CityForecastActivity) {
                     isFav = true
-                    ivFav.isEnabled = true
-                    city.isFavorite = true
                 }
             }
 

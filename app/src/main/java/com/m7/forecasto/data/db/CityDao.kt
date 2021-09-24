@@ -19,4 +19,7 @@ interface CityDao {
 
     @Query("SELECT * FROM City")
     fun getSavedCities(): LiveData<List<City>>
+
+    @Query("SELECT id FROM City")
+    suspend fun getIds(): List<Int>
 }

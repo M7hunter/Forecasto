@@ -1,8 +1,10 @@
 package com.m7.forecasto.di
 
 import com.m7.forecasto.BuildConfig
-import com.m7.forecasto.data.api.APIs
-import com.m7.forecasto.data.api.APIsImpl
+import com.m7.forecasto.data.api.ForecastAPIs
+import com.m7.forecasto.data.api.ForecastAPIsImpl
+import com.m7.forecasto.data.api.SuggestionAPIs
+import com.m7.forecasto.data.api.SuggestionAPIsImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,15 +19,26 @@ import retrofit2.converter.gson.GsonConverterFactory
 class AppModule {
 
     @Provides
-    fun provideAPIsImpl(apis: APIs): APIsImpl = APIsImpl(apis)
+    fun provideForecastAPIsImpl(apis: ForecastAPIs): ForecastAPIsImpl = ForecastAPIsImpl(apis)
 
     @Provides
-    fun provideAPIs(okHttpClient: OkHttpClient): APIs = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL)
+    fun provideSuggestionAPIsImpl(apis: SuggestionAPIs): SuggestionAPIsImpl = SuggestionAPIsImpl(apis)
+
+    @Provides
+    fun provideForecastAPIs(okHttpClient: OkHttpClient): ForecastAPIs = Retrofit.Builder()
+        .baseUrl(BuildConfig.FORECAST_BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        .create(APIs::class.java)
+        .create(ForecastAPIs::class.java)
+
+    @Provides
+    fun provideSuggestionAPIs(okHttpClient: OkHttpClient): SuggestionAPIs = Retrofit.Builder()
+        .baseUrl(BuildConfig.PLACES_BASE_URL)
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(SuggestionAPIs::class.java)
 
     @Provides
     fun provideOkHttpClient(): OkHttpClient =

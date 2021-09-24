@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.forecast.CityForecastActivity" />
+        <activity android:name=".ui.search.SearchActivity" />
     </application>
 
 </manifest>
